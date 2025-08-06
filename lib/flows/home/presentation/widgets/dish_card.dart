@@ -29,7 +29,7 @@ class DishCard extends StatelessWidget {
       child: Row(
         children: [
           Hero(
-            tag: 'dish-${dish.id}-image',
+            tag: 'dish-${dish.hashCode}-image',
             child: const AspectRatio(
               aspectRatio: 1,
               child: Placeholder(),

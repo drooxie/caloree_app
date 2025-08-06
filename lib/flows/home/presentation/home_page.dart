@@ -1,3 +1,4 @@
+import 'package:caloree_app/app/router/routes.dart';
 import 'package:caloree_app/flows/home/cubit/home_cubit.dart';
 import 'package:caloree_app/flows/home/presentation/widgets/calendar_carousel.dart';
 import 'package:caloree_app/flows/home/presentation/widgets/dishes_list_view.dart';
@@ -48,7 +49,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _onAddDishPressed(BuildContext context) {}
+  void _onAddDishPressed(BuildContext context) {
+    const AddDishPageRoute().push(context);
+  }
 
   void _onHorizontalDragStart(DragStartDetails details) {
     _scrollDragController = _calendarPageController.position.drag(

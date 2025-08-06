@@ -114,7 +114,6 @@
 				AC63536A6728D5FA3F37C69F /* Pods-RunnerTests.release.xcconfig */,
 				7740217995238A4156DA256A /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -474,6 +473,7 @@
 				DEVELOPMENT_TEAM = 78JCA4AUF6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Caloree;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -657,6 +657,7 @@
 				DEVELOPMENT_TEAM = 78JCA4AUF6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Caloree;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -680,6 +681,7 @@
 				DEVELOPMENT_TEAM = 78JCA4AUF6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Caloree;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

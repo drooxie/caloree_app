@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:caloree_app/flows/add_dish/cubit/add_dish_cubit.dart' as _i154;
 import 'package:caloree_app/flows/home/cubit/home_cubit.dart' as _i389;
 import 'package:caloree_app/flows/home/data/repositories/dishes_repository.dart'
     as _i1063;
@@ -27,6 +28,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i371.DishesRepositoryI>(() => _i1063.DishesRepository());
     gh.factory<_i389.HomeCubit>(
       () => _i389.HomeCubit(gh<_i371.DishesRepositoryI>()),
+    );
+    gh.factory<_i154.AddDishCubit>(
+      () => _i154.AddDishCubit(gh<_i371.DishesRepositoryI>()),
     );
     return this;
   }

@@ -1,5 +1,5 @@
+import 'package:caloree_app/app/router/routes.dart';
 import 'package:caloree_app/flows/home/data/models/dish_model.dart';
-import 'package:caloree_app/flows/home/presentation/dish_details_page.dart';
 import 'package:caloree_app/flows/home/presentation/widgets/dish_card.dart';
 import 'package:flutter/material.dart';
 
@@ -20,9 +20,7 @@ class DishesListView extends StatelessWidget {
         final dish = dishes[index];
 
         return GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => DishDetailsPage(dish: dish)),
-          ),
+          onTap: () => DishDetailsPageRoute(dish).push(context),
           child: DishCard(dish: dish),
         );
       },

@@ -24,7 +24,7 @@ class DishDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Hero(
-                tag: 'dish-${dish.id}-image',
+                tag: 'dish-${dish.hashCode}-image',
                 child: const AspectRatio(
                   aspectRatio: 1,
                   child: Placeholder(),
@@ -65,8 +65,8 @@ class DishDetailsPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: Wrap(
-                        spacing: 8,
-                        runSpacing: 12,
+                        spacing: 6,
+                        runSpacing: 8,
                         children: dish.ingredients
                             .map(
                               (ingredient) =>

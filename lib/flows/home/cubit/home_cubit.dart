@@ -54,8 +54,6 @@ class HomeCubit extends Cubit<HomeState> {
         currentDay: state.currentDay.add(const Duration(days: 1)),
       ),
     );
-
-    print('Day changed to ${state.currentDay}');
   }
 
   Future<void> goToPreviousDay() async {
@@ -64,7 +62,5 @@ class HomeCubit extends Cubit<HomeState> {
         currentDay: state.currentDay.subtract(const Duration(days: 1)),
       ),
     );
-
-    print('Day changed to ${state.currentDay}');
   }
 }
