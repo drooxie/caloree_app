@@ -38,19 +38,19 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _homeCubit.loadHomeData();
-    _calendarPageController.addListener(
-      () {
-        final page = _calendarPageController.page?.round();
+    _calendarPageController.addListener(_dayChangedListener);
+  }
 
-        if (page != null && page != _selectedDayIndex) {
-          page < _selectedDayIndex
-              ? _homeCubit.goToPreviousDay()
-              : _homeCubit.goToNextDay();
+  void _dayChangedListener() {
+    final page = _calendarPageController.page?.round();
 
-          _selectedDayIndex = page;
-        }
-      },
-    );
+    if (page != null && page != _selectedDayIndex) {
+      page < _selectedDayIndex
+          ? _homeCubit.goToPreviousDay()
+          : _homeCubit.goToNextDay();
+
+      _selectedDayIndex = page;
+    }
   }
 
   void _onAddDishPressed(BuildContext context) {
