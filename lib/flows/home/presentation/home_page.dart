@@ -17,7 +17,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const _initialDayIndex = 10;
-  static const _viewportFraction = 0.45;
+  static const _viewportFraction = 0.5;
+
+  // recommended amount of calories for human in average;
+  // Of course it's better to handle this value based on user's body mass index etc.
+  static const _dailyCaloriesNormalAmount = 2250;
 
   late final HomeCubit _homeCubit = context.read<HomeCubit>();
 
@@ -56,6 +60,7 @@ class _HomePageState extends State<HomePage> {
   void _onHorizontalDragStart(DragStartDetails details) {
     _scrollDragController = _calendarPageController.position.drag(
       details,
+      // ignore: no_empty_block
       () {},
     );
   }
@@ -94,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                 const HomeHeader(),
                 const SizedBox(height: 24),
                 SizedBox(
-                  height: 80,
+                  height: 100,
                   child: Row(
                     children: [
                       IconButton(
@@ -124,25 +129,52 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 BlocBuilder<HomeCubit, HomeState>(
-                  builder: (context, state) {
+                  builder: (_, state) {
                     final dishes = _homeCubit.todayDishes;
+                    final todayCalories = _homeCubit.todayCalories;
 
-                    if (state.isLoading || dishes == null) {
+                    if (state.isLoading ||
+                        dishes == null ||
+                        todayCalories == null) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
 
-                    return dishes.isEmpty
-                        ? const Expanded(
-                            child: Center(child: NoEntriesMessage()),
-                          )
-                        : Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 24),
-                              child: DishesListView(dishes: dishes),
+                    if (dishes.isEmpty) {
+                      return const Expanded(
+                        child: Center(child: NoEntriesMessage()),
+                      );
+                    }
+
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Today calories: $todayCalories',
+                            style: TextTheme.of(context).bodyLarge,
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 8,
+                              left: 32,
+                              right: 32,
+                              bottom: 24,
                             ),
-                          );
+
+                            child: LinearProgressIndicator(
+                              borderRadius: BorderRadius.circular(100),
+                              value: todayCalories / _dailyCaloriesNormalAmount,
+                            ),
+                          ),
+
+                          Expanded(
+                            child: DishesListView(dishes: dishes),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 ),
               ],

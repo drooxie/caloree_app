@@ -26,6 +26,17 @@ class HomeCubit extends Cubit<HomeState> {
       )
       .toList();
 
+  int? get todayCalories {
+    final todayDishes = this.todayDishes;
+    if (todayDishes == null) return null;
+
+    final todayCalories = todayDishes
+        .map((dish) => dish.calories)
+        .fold(0.0, (previousValue, element) => previousValue + element);
+
+    return todayCalories.toInt();
+  }
+
   Future<void> loadHomeData() async {
     try {
       final dishes = await _dishesRepository.getDishes();
@@ -39,10 +50,12 @@ class HomeCubit extends Cubit<HomeState> {
     final dishes = state.dishes;
     if (state.isLoading || dishes == null) return;
 
-    dishes.add(dish);
+    final updatedDishes = List<DishModel>.from(dishes);
+    updatedDishes.add(dish);
 
     try {
-      await _dishesRepository.saveDishes(dishes);
+      emit(state.copyWith(dishes: updatedDishes));
+      await _dishesRepository.saveDishes(updatedDishes);
     } catch (e) {
       emit(state.copyWith(errorMessage: e.toString()));
     }

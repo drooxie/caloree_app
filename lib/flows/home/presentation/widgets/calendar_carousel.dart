@@ -1,3 +1,4 @@
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -22,23 +23,35 @@ class _CalendarCarouselState extends State<CalendarCarousel> {
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
 
-    return PageView.builder(
-      controller: widget.pageController,
-      itemBuilder: (_, int index) {
-        final date = widget.initialDate.add(
-          Duration(days: index - _initialIndex),
-        );
+    return FadingEdgeScrollView.fromPageView(
+      gradientFractionOnStart: 0.5,
+      gradientFractionOnEnd: 0.5,
+      child: PageView.builder(
+        controller: widget.pageController,
+        itemBuilder: (_, int index) {
+          final date = widget.initialDate.add(
+            Duration(days: index - _initialIndex),
+          );
 
-        final day = DateFormat(DateFormat.DAY).format(date);
-        final dayTitle = DateFormat(DateFormat.WEEKDAY).format(date);
+          final day = DateFormat(DateFormat.DAY).format(date);
+          final dayTitle = DateFormat(DateFormat.WEEKDAY).format(date);
 
-        return Column(
-          children: [
-            Text(day, style: textTheme.headlineLarge),
-            Text(dayTitle, style: textTheme.titleLarge),
-          ],
-        );
-      },
+          return Column(
+            children: [
+              Text(
+                day,
+                style: textTheme.headlineLarge,
+                maxLines: 1,
+              ),
+              Text(
+                dayTitle,
+                style: textTheme.titleLarge,
+                maxLines: 1,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

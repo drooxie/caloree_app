@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:caloree_app/app/style/app_style_constants.dart';
 import 'package:caloree_app/flows/home/data/models/dish_model.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +30,20 @@ class DishCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Hero(
-            tag: 'dish-${dish.hashCode}-image',
-            child: const AspectRatio(
-              aspectRatio: 1,
-              child: Placeholder(),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Hero(
+              tag: 'dish-${dish.hashCode}-image',
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRRect(
+                  borderRadius: AppStyleConstants().borderRadius,
+                  child: Image.file(
+                    File(dish.imagePath),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
           ),
           Expanded(
@@ -44,6 +55,8 @@ class DishCard extends StatelessWidget {
                 children: [
                   Text(
                     dish.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: textTheme.headlineLarge?.color,
@@ -51,11 +64,15 @@ class DishCard extends StatelessWidget {
                   ),
                   Text(
                     '${dish.calories} calories',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: textTheme.labelLarge,
                   ),
                   const SizedBox(height: 2),
                   Text(
                     dish.ingredients.join(', '),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: textTheme.labelLarge,
                   ),
                 ],

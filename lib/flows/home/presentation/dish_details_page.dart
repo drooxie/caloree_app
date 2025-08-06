@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:caloree_app/flows/home/data/models/dish_model.dart';
 import 'package:caloree_app/flows/home/presentation/widgets/ingredient_chip.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +27,12 @@ class DishDetailsPage extends StatelessWidget {
             children: [
               Hero(
                 tag: 'dish-${dish.hashCode}-image',
-                child: const AspectRatio(
+                child: AspectRatio(
                   aspectRatio: 1,
-                  child: Placeholder(),
+                  child: Image.file(
+                    File(dish.imagePath),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Padding(

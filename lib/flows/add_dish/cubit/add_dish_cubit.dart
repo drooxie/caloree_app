@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:caloree_app/flows/home/data/models/dish_model.dart';
-import 'package:caloree_app/flows/home/domain/repositories/dishes_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,18 +12,27 @@ part 'add_dish_state.dart';
 
 @injectable
 class AddDishCubit extends Cubit<AddDishState> {
-  AddDishCubit(this._dishesRepository) : super(const AddDishState());
+  AddDishCubit() : super(const AddDishState());
 
-  final DishesRepositoryI _dishesRepository;
+  bool get canAddDish =>
+      state.title != null &&
+      state.imagePath != null &&
+      state.calories != 0 &&
+      state.ingredients.isNotEmpty;
 
   Future<void> getDishPhoto() async {
     try {
+      emit(state.copyWith(isCameraShowing: true));
+
       final image = await ImagePicker().pickImage(
         source: ImageSource.camera,
         requestFullMetadata: false,
-        imageQuality: 75,
+        imageQuality: 25,
       );
+
       if (image == null) {
+        emit(state.copyWith(isCameraShowing: false));
+
         return;
       }
 
@@ -36,10 +44,20 @@ class AddDishCubit extends Cubit<AddDishState> {
 
       await File(filePath).writeAsBytes(imageBytes);
 
-      print('File saved!');
-
-      emit(state.copyWith(imagePath: filePath));
-    } catch (e) {}
+      emit(
+        state.copyWith(
+          imagePath: filePath,
+          isCameraShowing: false,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          error: 'Error happened during the photo: $e',
+          isCameraShowing: false,
+        ),
+      );
+    }
   }
 
   void setDishTitle(String title) {
@@ -54,30 +72,24 @@ class AddDishCubit extends Cubit<AddDishState> {
     emit(state.copyWith(ingredients: ingredients));
   }
 
-  Future<bool> saveDish() async {
-    final dishes = await _dishesRepository.getDishes();
-
+  DishModel? getCompleteDish() {
     final title = state.title;
     final calories = state.calories;
+    final imagePath = state.imagePath;
     final ingredients = state.ingredients;
 
-    if (title == null) {
-      emit(state.copyWith(error: 'Unable to add a dish without name'));
+    if (!canAddDish || title == null || imagePath == null) {
+      emit(state.copyWith(error: 'Unable to add incomplete dish'));
 
-      return false;
+      return null;
     }
 
-    dishes.add(
-      DishModel(
-        title: title,
-        calories: calories.toInt(),
-        ingredients: ingredients,
-        dateAdded: DateTime.now(),
-      ),
+    return DishModel(
+      title: title,
+      imagePath: imagePath,
+      calories: calories.toInt(),
+      ingredients: ingredients,
+      dateAdded: DateTime.now(),
     );
-
-    await _dishesRepository.saveDishes(dishes);
-
-    return true;
   }
 }

@@ -25,12 +25,10 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.factory<_i154.AddDishCubit>(() => _i154.AddDishCubit());
     gh.factory<_i371.DishesRepositoryI>(() => _i1063.DishesRepository());
     gh.factory<_i389.HomeCubit>(
       () => _i389.HomeCubit(gh<_i371.DishesRepositoryI>()),
-    );
-    gh.factory<_i154.AddDishCubit>(
-      () => _i154.AddDishCubit(gh<_i371.DishesRepositoryI>()),
     );
     return this;
   }

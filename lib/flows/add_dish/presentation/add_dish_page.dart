@@ -4,6 +4,7 @@ import 'package:caloree_app/app/di/dependency_injector.dart';
 import 'package:caloree_app/app/router/routes.dart';
 import 'package:caloree_app/flows/add_dish/cubit/add_dish_cubit.dart';
 import 'package:caloree_app/flows/add_dish/presentation/widgets/ingredients_selector.dart';
+import 'package:caloree_app/flows/home/cubit/home_cubit.dart';
 import 'package:caloree_app/shared_widgets/app_button.dart';
 import 'package:caloree_app/shared_widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
@@ -23,19 +24,19 @@ class _AddDishPageState extends State<AddDishPage> {
   void initState() {
     super.initState();
 
-    Future.delayed(
-      const Duration(seconds: 2),
-      _cubit.getDishPhoto,
-    );
+    _launchInitialCamera();
+  }
+
+  Future<void> _launchInitialCamera() async {
+    await Future.delayed(const Duration(seconds: 1));
+    await _cubit.getDishPhoto();
   }
 
   void _errorListener(BuildContext context, AddDishState state) {
     final error = state.error;
 
     if (error != null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(error),
         ),
@@ -44,9 +45,12 @@ class _AddDishPageState extends State<AddDishPage> {
   }
 
   Future<void> _onAddPressed() async {
-    final isSaved = await _cubit.saveDish();
+    final dish = _cubit.getCompleteDish();
+    if (dish == null) return;
 
-    if (mounted && isSaved) {
+    await context.read<HomeCubit>().addNewDish(dish);
+
+    if (mounted) {
       const HomePageRoute().go(context);
     }
   }
@@ -61,8 +65,18 @@ class _AddDishPageState extends State<AddDishPage> {
           builder: (_, state) {
             final imagePath = state.imagePath;
 
+            if (state.isCameraShowing) {
+              return const SizedBox();
+            }
+
             if (imagePath == null) {
-              return const Center(child: CircularProgressIndicator());
+              return Align(
+                child: AppButton(
+                  text: 'Take a photo',
+                  leadingIcon: const Icon(Icons.camera_alt_outlined),
+                  onPressed: _cubit.getDishPhoto,
+                ),
+              );
             }
 
             return SingleChildScrollView(
@@ -129,10 +143,7 @@ class _AddDishPageState extends State<AddDishPage> {
                           child: AppButton(
                             text: 'Add',
                             leadingIcon: const Icon(Icons.add),
-                            onPressed:
-                                state.title == null || state.ingredients.isEmpty
-                                ? null
-                                : _onAddPressed,
+                            onPressed: _cubit.canAddDish ? _onAddPressed : null,
                           ),
                         ),
                       ],
