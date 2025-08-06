@@ -6,14 +6,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 part 'home_cubit.freezed.dart';
+part 'home_cubit.g.dart';
 part 'home_state.dart';
 
 @injectable
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._dishesRepository)
-    : super(
-        HomeState(currentDay: DateTime.now()),
-      );
+    : super(HomeState(currentDay: DateTime.now()));
 
   final DishesRepositoryI _dishesRepository;
 

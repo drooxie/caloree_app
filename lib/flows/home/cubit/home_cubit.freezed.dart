@@ -12,6 +12,7 @@ part of 'home_cubit.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$HomeState {
 
@@ -22,6 +23,8 @@ mixin _$HomeState {
 @pragma('vm:prefer-inline')
 $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>(this as HomeState, _$identity);
 
+  /// Serializes this HomeState to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -29,7 +32,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.currentDay, currentDay) || other.currentDay == currentDay)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other.dishes, dishes)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,currentDay,isLoading,const DeepCollectionEquality().hash(dishes),errorMessage);
 
@@ -77,11 +80,11 @@ as String?,
 
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _HomeState implements HomeState {
   const _HomeState({required this.currentDay, this.isLoading = false, final  List<DishModel>? dishes, this.errorMessage}): _dishes = dishes;
-  
+  factory _HomeState.fromJson(Map<String, dynamic> json) => _$HomeStateFromJson(json);
 
 @override final  DateTime currentDay;
 @override@JsonKey() final  bool isLoading;
@@ -102,14 +105,17 @@ class _HomeState implements HomeState {
 @pragma('vm:prefer-inline')
 _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeState>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$HomeStateToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.currentDay, currentDay) || other.currentDay == currentDay)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other._dishes, _dishes)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,currentDay,isLoading,const DeepCollectionEquality().hash(_dishes),errorMessage);
 

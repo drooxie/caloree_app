@@ -21,6 +21,7 @@ class CaloreeApp extends StatelessWidget {
     return BlocProvider(
       create: (_) => getIt<HomeCubit>(),
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerConfig: router,
         theme: AppTheme().dark,
       ),

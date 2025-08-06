@@ -28,6 +28,8 @@ dependencies:
   circular_reveal_animation: ^2.0.2
   image_picker: ^1.1.2
   fading_edge_scrollview: ^4.1.1
+  json_annotation: ^4.9.0
+  shared_preferences: ^2.5.3
 
 
 dev_dependencies:
@@ -41,6 +43,7 @@ dev_dependencies:
   go_router_builder: ^3.0.1
   injectable_generator: ^2.7.0
   flutter_gen_runner: ^5.11.0
+  json_serializable: ^6.9.5
 
 flutter:
   uses-material-design: true

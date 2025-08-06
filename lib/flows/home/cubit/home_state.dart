@@ -9,4 +9,7 @@ sealed class HomeState with _$HomeState {
     List<DishModel>? dishes,
     String? errorMessage,
   }) = _HomeState;
+
+  factory HomeState.fromJson(Map<String, dynamic> json) =>
+      _$HomeStateFromJson(json);
 }

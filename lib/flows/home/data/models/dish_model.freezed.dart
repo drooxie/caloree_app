@@ -12,6 +12,7 @@ part of 'dish_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$DishModel {
 
@@ -22,6 +23,8 @@ mixin _$DishModel {
 @pragma('vm:prefer-inline')
 $DishModelCopyWith<DishModel> get copyWith => _$DishModelCopyWithImpl<DishModel>(this as DishModel, _$identity);
 
+  /// Serializes this DishModel to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -29,7 +32,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is DishModel&&(identical(other.title, title) || other.title == title)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.calories, calories) || other.calories == calories)&&const DeepCollectionEquality().equals(other.ingredients, ingredients)&&(identical(other.dateAdded, dateAdded) || other.dateAdded == dateAdded));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,title,imagePath,calories,const DeepCollectionEquality().hash(ingredients),dateAdded);
 
@@ -78,11 +81,11 @@ as DateTime,
 
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _DishModel implements DishModel {
   const _DishModel({required this.title, required this.imagePath, required this.calories, required final  List<String> ingredients, required this.dateAdded}): _ingredients = ingredients;
-  
+  factory _DishModel.fromJson(Map<String, dynamic> json) => _$DishModelFromJson(json);
 
 @override final  String title;
 @override final  String imagePath;
@@ -102,14 +105,17 @@ class _DishModel implements DishModel {
 @pragma('vm:prefer-inline')
 _$DishModelCopyWith<_DishModel> get copyWith => __$DishModelCopyWithImpl<_DishModel>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$DishModelToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _DishModel&&(identical(other.title, title) || other.title == title)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.calories, calories) || other.calories == calories)&&const DeepCollectionEquality().equals(other._ingredients, _ingredients)&&(identical(other.dateAdded, dateAdded) || other.dateAdded == dateAdded));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,title,imagePath,calories,const DeepCollectionEquality().hash(_ingredients),dateAdded);
 
