@@ -7,7 +7,7 @@ App for tracking your daily calories!
 
 Flutter SDK: `v3.32.8`  
 Architecture: Clean Architecture  
-State Management: BLoC (Cubit)
+State Management: BLoC (Cubit)  
 DI: `get_it`, `injectable`  
 Navigation: `go_router`  
 Local Storage: `shared_preferences`    
