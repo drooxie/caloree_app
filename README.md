@@ -1,16 +1,25 @@
 # caloree_app
+[![wakatime](https://wakatime.com/badge/user/e34f462b-4449-40e4-b375-f945e8ceb023/project/379dd15b-cb45-4554-898c-0909f9b08c69.svg)](https://wakatime.com/badge/user/e34f462b-4449-40e4-b375-f945e8ceb023/project/379dd15b-cb45-4554-898c-0909f9b08c69)
 
-A new Flutter project.
+App for tracking your daily calories!
 
-## Getting Started
+## Tech Stack
 
-This project is a starting point for a Flutter application.
+Flutter SDK: `v3.32.8`  
+Architecture: Clean Architecture  
+State Management: BLoC (Cubit)
+DI: `get_it`, `injectable`  
+Navigation: `go_router`  
+Local Storage: `shared_preferences`    
+  
+Code style metrics and linter rules: `solid_lints`
 
-A few resources to get you started if this is your first Flutter project:
+## Getting started
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+To launch the app, please run `dart pub get` first. Generated models are included, so you are not supposed to run build_runner to launch the project.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> Please note that the iOS Simulator does not support an emulated camera. To test this functionality, you should either use a physical iOS device or an Android emulator.
+
+## Demo
+
+![demo](assets/docs/demo.gif)
